@@ -14,12 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(urlPatterns = "/*")
 public class LoginFilter implements Filter {
 	
+	/**
+	 * OverridingName: doFilter  
+	 * Description: 所有接口都过滤  
+	 * @param request
+	 * @param response
+	 * @param chain
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         if(!LoginUtil.auth(req, resp)) {
-        	resp.getWriter().write("NO AUTH:403");
+        	resp.getWriter().write("{NO AUTH:403}");
         	return;
         }
         chain.doFilter(req, resp);
